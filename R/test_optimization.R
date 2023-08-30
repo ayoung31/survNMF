@@ -18,7 +18,8 @@ delta <- dat$delta
 
 start <- Sys.time()
 print(start)
-fit <- optimize_loss(X,k,alpha=1,y,delta,theta=c(1,1,1),lambda=0,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
+fit <- optimize_loss(X,k,alpha=1,y,delta,theta=c(1,1,1),lambda=0,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
 time <- Sys.time() - start
+print(time)
 
 save(dat,fit,time,file='data/test_optim.RData')
