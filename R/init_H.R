@@ -18,5 +18,3 @@ init_H <- function(X,k,method='IndNMF',ninit=50){
   }
   return(H0)
 }
-
-H0 <- init_H(X,k)
