@@ -5,7 +5,6 @@ calc_loss <- function(X,W,H,beta,alpha,y,delta,theta,lambda){
     ni <- ncol(X[[i]])
     yi <- y[[i]]
     Xi <- X[[i]]
-    Wi <- W[[i]]
     Hi <- H[[i]]
     deltai <- delta[[i]]
     p1 <- norm(Xi-W%*%Hi,'F')^2
