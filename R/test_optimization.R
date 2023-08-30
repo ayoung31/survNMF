@@ -4,7 +4,7 @@ source('R/sim_dat.R')
 set.seed(35)
 
 M <- 3
-p <- 1000
+p <- 500
 ni <- 100
 k <- 6
 ksurv <- 2
@@ -17,6 +17,7 @@ y <- dat$y
 delta <- dat$delta
 
 start <- Sys.time()
+print(start)
 fit <- optimize_loss(X,k,alpha,y,delta,theta,lambda,tol,maxit,tol_H,maxit_H,step)
 time <- Sys.time() - start
 
