@@ -8,9 +8,9 @@ source('R/gradient_descent_H.R')
 source('R/calc_loss.R')
 source('R/init_H.R')
 
-optimize_loss <- function(X,k,alpha,y,delta,theta,lambda,tol,maxit,tol_H,maxit_H,step){
+optimize_loss <- function(X,H0,k,alpha,y,delta,theta,lambda,tol,maxit,tol_H,maxit_H,step){
   #initialize
-  H <- init_H(X,k)
+  H <- H0
   loss <- 0
   eps <- 1
   it <- 0
