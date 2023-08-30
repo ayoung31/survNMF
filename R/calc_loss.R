@@ -17,7 +17,7 @@ calc_loss <- function(X,W,H,beta,alpha,y,delta,theta,lambda){
   }
   p3 <- sum(abs(beta))
   
-  loss <- p1 + p3
+  loss <- p + p3
   
   return(loss)
 }

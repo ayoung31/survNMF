@@ -16,10 +16,14 @@ X <- dat$X
 y <- dat$y
 delta <- dat$delta
 
-start <- Sys.time()
-print(start)
-fit <- optimize_loss(X,k,alpha=1,y,delta,theta=c(1,1,1),lambda=0,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
-time <- Sys.time() - start
-print(time)
+for(lambda in seq(0,1,.05)){
+  start <- Sys.time()
+  print(start)
+  fit <- optimize_loss(X,k,alpha=1,y,delta,theta=c(1,1,1),lambda=lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
+  time <- Sys.time() - start
+  print(time)
+  
+  save(dat,fit,time,file=paste0('data/test_optim',lambda,'.RData'))
+}
 
-save(dat,fit,time,file='data/test_optim.RData')
+
