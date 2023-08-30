@@ -1,7 +1,7 @@
 library(gtools)
 library(coxed)
 
-sim_data <- function(M,p,ni,k,ksurv,beta){
+sim_dat <- function(M,p,ni,k,ksurv,beta){
   
   W <- matrix(.0001,nrow=p,ncol=k)
   
