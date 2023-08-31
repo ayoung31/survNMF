@@ -8,7 +8,7 @@ p <- 500
 ni <- 100
 k <- 6
 ksurv <- 2
-beta <- rep(1,ksurv)
+beta <- rep(2,ksurv)
 
 dat <- sim_dat(M,p,ni,k,ksurv,beta)
 
