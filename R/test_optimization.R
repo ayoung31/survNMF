@@ -1,5 +1,6 @@
 source('R/optimize_loss.R')
 source('R/sim_dat.R')
+source('R/init_H.R')
 
 set.seed(35)
 
@@ -21,7 +22,7 @@ H0 <- init_H(X,k)
 for(lambda in seq(0,.4,.02)){
   start <- Sys.time()
   print(start)
-  fit <- optimize_loss(X,H0,k,alpha=1,y,delta,theta=c(1,1,1),lambda=lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
+  fit <- optimize_loss(X,H0,k,y,delta,theta=c(1,1,1),alpha=1,lambda=lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6)
   time <- Sys.time() - start
   print(time)
   
