@@ -55,5 +55,5 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda,K,seed){
   aloss <- loss %>% group_by(k,alpha,lambda) %>% summarise(avgloss=mean(loss))
   # params <- aloss[which.min(aloss$avgloss),]
   
-  return(aloss)
+  return(list(loss,aloss))
 }
