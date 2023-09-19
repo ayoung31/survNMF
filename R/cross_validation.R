@@ -4,7 +4,7 @@ library(dplyr)
 library(NMF)
 
 # let alpha, lambda, k be a grid of possible values
-cv <- function(X,y,delta,theta,nfold,alpha,lambda,K,seed){
+cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed){
   set.seed(seed)
   M <- length(X)
   folds <- list()
@@ -31,10 +31,16 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda,K,seed){
     }
     for(k in K){
       H0 <- init_H(Xtrain,k)
+      if(is.null(lambda)){
+        H0c <- t(do.call('cbind',H0))
+        lmax <- max(apply(H0c,2,function(x){abs(unlist(ytrain) %*% x)}))/nrow(H0c)
+        lmin <- .001*lmax
+        lambda <- seq(from=lmin,to=lmax,length.out=50)
+      }
       for(a in alpha){
         for(l in lambda){
-          #fit loss function to training data
-          fit <- optimize_loss(X=Xtrain,H0=H0,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,maxit=10000,tol=.01,step=1e-5)
+          #fit loss function to training data 
+          fit <- optimize_loss(X=Xtrain,H0=H0,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99)
           
           #get Htest
           Htest <- list()

@@ -23,7 +23,8 @@ grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
   eps <- 1
   b <- 0
   while(eps > tol & it < maxit){
-    grad <- f_grad(X,W,H,beta,alpha,y,delta,theta,j)
+    grad <- f_grad_rcpp(X,W,H,as.matrix(beta),alpha,as.matrix(y),as.matrix(delta),theta,j)
+    #grad <- f_grad(X,W,H,beta,alpha,y,delta,theta,j)
     Hj_prior <- H[,j]
     b_prior <- b
     b <- mu*b_prior + grad
@@ -32,6 +33,9 @@ grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
     
     
     eps <- sqrt(sum((Hj_prior-H[,j])^2))
+    if(is.na(eps)){
+      print(sprintf('it: %d',it))
+    }
     
     it <- it + 1
     if(it==maxit){
