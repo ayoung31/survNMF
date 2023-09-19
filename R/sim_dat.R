@@ -1,17 +1,27 @@
 library(gtools)
 library(simsurv)
 
-sim_dat <- function(M,p,ni,k,ksurv,beta){
+sim_dat <- function(M,p,ni,k,lb,lf,ksurv,beta){
   
-  W <- matrix(rexp(p*k,2),nrow=p,ncol=k)
+  W <- matrix(rexp(p*k,lb),nrow=p,ncol=k)
   
+  genes <- list()
   for(i in 1:k){
-    W[((i-1)*25+1):(i*25),i] <- 10
+    genes[[i]] <- sample(1:nrow(W),25,replace=FALSE)
+    W[genes[[i]],i] <- rexp(25,lf)
+    
   }
   
+  #set first ksurv factors to small values compared to others
   H <- list()
+  
   for(i in 1:M){
-    H[[i]] <- matrix(rexp(ni*k,1/.25),nrow=k,ncol=ni)
+    H[[i]] <- matrix(nrow=k,ncol=ni)
+    H[[i]][1:ksurv,] <- rexp(ni*ksurv,1/.08)
+  }
+  
+  for(i in 1:M){
+    H[[i]][(ksurv+1):k,] <- matrix(rexp(ni*(k-ksurv),1/.25),nrow=(k-ksurv),ncol=ni)
   }
   Hbind <- do.call('cbind',H)
   
@@ -31,7 +41,7 @@ sim_dat <- function(M,p,ni,k,ksurv,beta){
     X[[i]] <- W %*% H[[i]]
   }
   
-  return(list(X=X,y=y,delta=delta,Wtrue=W,Htrue=H))
+  return(list(X=X,y=y,delta=delta,Wtrue=W,Htrue=H,gTrue=genes))
 }
 
 
