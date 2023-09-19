@@ -17,14 +17,17 @@ f_grad <- function(X,W,H,beta,alpha,y,delta,theta,j){
   return(theta*(p1-alpha*delta[j]*p2*beta))
 }
 
-grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step){
+grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
   it <- 0
   start <- Sys.time()
   eps <- 1
+  b <- 0
   while(eps > tol & it < maxit){
     grad <- f_grad(X,W,H,beta,alpha,y,delta,theta,j)
     Hj_prior <- H[,j]
-    H[,j] <- H[,j]-step*grad
+    b_prior <- b
+    b <- mu*b_prior + grad
+    H[,j] <- H[,j]-step*b
     H[,j][H[,j]<0] <- 0
     
     
@@ -46,12 +49,12 @@ grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step){
 
 # here H,X,y,and delta are lists
 # theta is a vector
-grad_desc_H <- function(X,W,H,beta,alpha,y,delta,theta,tol,maxit,step){
+grad_desc_H <- function(X,W,H,beta,alpha,y,delta,theta,tol,maxit,step,mu){
   M <- length(X)
   for(i in 1:M){
     ni <- ncol(X[[i]])
     for(j in 1:ni){
-      fit <- grad_desc_hji(X[[i]],W,H[[i]],beta,alpha,y[[i]],delta[[i]],theta[i],j,tol,maxit,step)
+      fit <- grad_desc_hji(X[[i]],W,H[[i]],beta,alpha,y[[i]],delta[[i]],theta[i],j,tol,maxit,step,mu)
       H[[i]] <- fit$H
       sprintf("i: %d j: %d runtime: %d", i, j, fit$runtime)
     }

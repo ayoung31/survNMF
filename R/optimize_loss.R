@@ -8,7 +8,7 @@ source('R/gradient_descent_H.R')
 source('R/calc_loss.R')
 source('R/init_H.R')
 
-optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6){
+optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6,mu=.9){
   #initialize
   H <- H0
   loss <- 0
@@ -25,7 +25,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.001,maxit=5000
     W <- t(update_W(X,H,theta))
     
     # Update H
-    H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step)
+    H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step,mu)
     
     # Calculate loss
     loss <- calc_loss(X,W,H,beta,alpha,y,delta,theta,lambda)
