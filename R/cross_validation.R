@@ -1,9 +1,9 @@
-source('R/optimize_loss.R')
-source('R/init_H.R')
 library(dplyr)
 library(NMF)
 
 # let alpha, lambda, k be a grid of possible values
+
+#' @export
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed){
   set.seed(seed)
   M <- length(X)

@@ -1,4 +1,4 @@
-
+#' @export
 update_W <- function(X,H,theta){
   M <- length(X)
   a <- list()

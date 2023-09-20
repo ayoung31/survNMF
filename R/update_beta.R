@@ -1,3 +1,4 @@
+#' @export
 update_beta <- function(H,y,delta,theta,lambda){
   ns <- numeric()
   M <- length(H)

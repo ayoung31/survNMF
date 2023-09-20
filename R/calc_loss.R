@@ -1,3 +1,4 @@
+#' @export
 calc_loss <- function(X,W,H,beta,alpha,y,delta,theta,lambda){
   M <- length(X)
   p <- 0
