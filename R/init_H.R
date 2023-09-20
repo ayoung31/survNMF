@@ -1,8 +1,8 @@
 library(NMF)
 init_H <- function(X,k,method='merge',ninit=10){
-  
+  M <- length(X)
   if(method=='IndNMF'){
-    M <- length(X)
+    
     H0 <- list()
     for(i in 1:M){
       fit <- list()
