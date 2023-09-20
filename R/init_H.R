@@ -1,4 +1,6 @@
 library(NMF)
+
+#' @export
 init_H <- function(X,k,method='merge',ninit=10){
   M <- length(X)
   if(method=='IndNMF'){
