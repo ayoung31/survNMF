@@ -1,5 +1,5 @@
 #' @export
-generate_folds <- function(seed,X){
+generate_folds <- function(seed,X,nfold){
   set.seed(seed)
   M <- length(X)
   folds <- list()
