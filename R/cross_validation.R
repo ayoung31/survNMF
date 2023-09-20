@@ -7,6 +7,7 @@ library(NMF)
 
 #' @export
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
+  M <- length(X)
   loss <- data.frame(matrix(ncol=5,nrow=0))
   colnames(loss) <- c('fold','k','alpha','lambda','loss')
   r <- 1
