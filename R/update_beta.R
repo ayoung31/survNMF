@@ -12,7 +12,7 @@ update_beta <- function(H,y,delta,theta,lambda){
   delta <- unlist(delta)
   
   y_surv <- Surv(y,delta)
-  fit <- glmnet(H,y_surv,family='cox',weights=weights,lambda=lambda)
+  fit <- glmnet::glmnet(H,y_surv,family='cox',weights=weights,lambda=lambda)
   
   return(as.numeric(coef(fit)))
 }

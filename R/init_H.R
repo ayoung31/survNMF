@@ -17,7 +17,7 @@ init_H <- function(X,k,method='merge',ninit=10){
       H0[[i]] <- best.fit@fit@H %*% diag(1/colSums(best.fit@fit@H))
     }
   }else if(method=='merge'){
-    fit <- nmf(do.call('cbind',X),k,nrun=ninit)
+    fit <- NMF::nmf(do.call('cbind',X),k,nrun=ninit)
     H <- fit@fit@H %*% diag(1/colSums(fit@fit@H))
     H0 <- list()
     nc <- ncol(X[[1]])

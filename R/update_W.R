@@ -10,6 +10,6 @@ update_W <- function(X,H,theta){
   A <- t(Reduce('+',a))
   B <- t(Reduce('+',b))
   
-  fit <- .fcnnls(A,B)
+  fit <- NMF::.fcnnls(A,B)
   return(fit$coef)
 }
