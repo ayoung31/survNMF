@@ -1,12 +1,3 @@
-library(NMF)
-library(survival)
-library(glmnet)
-
-# source('R/update_beta.R')
-# source('R/update_W.R')
-# source('R/gradient_descent_H.R')
-# source('R/calc_loss.R')
-# source('R/init_H.R')
 
 #' @export
 optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=15000,step=1e-6,mu=.9){
