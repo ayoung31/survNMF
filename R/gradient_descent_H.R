@@ -1,6 +1,5 @@
 # This function performs gradient descent on one column of H
 
-#' @export
 f_grad <- function(X,W,H,beta,alpha,y,delta,theta,j){
   # X is the p x n_i expression matrix of study i
   # W is a matrix of p genes by k factors
@@ -18,7 +17,6 @@ f_grad <- function(X,W,H,beta,alpha,y,delta,theta,j){
   return(theta*(p1-alpha*delta[j]*p2*beta))
 }
 
-#' @export
 grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
   it <- 0
   start <- Sys.time()
@@ -55,8 +53,6 @@ grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
 
 # here H,X,y,and delta are lists
 # theta is a vector
-
-#' @export
 grad_desc_H <- function(X,W,H,beta,alpha,y,delta,theta,tol,maxit,step,mu){
   M <- length(X)
   for(i in 1:M){

@@ -1,3 +1,5 @@
+source('R/optimize_loss.R')
+source('R/init_H.R')
 library(dplyr)
 library(NMF)
 
