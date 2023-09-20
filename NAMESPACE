@@ -3,6 +3,7 @@
 export(cv)
 export(f.grad.rcpp)
 export(f_grad)
+export(generate_folds)
 export(grad_desc_H)
 export(grad_desc_hji)
 export(init_H)
