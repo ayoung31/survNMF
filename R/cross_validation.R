@@ -37,7 +37,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed){
         H0c <- t(do.call('cbind',H0))
         lmax <- max(apply(H0c,2,function(x){abs(unlist(ytrain) %*% x)}))/nrow(H0c)
         lmin <- .001*lmax
-        lambda <- seq(from=lmin,to=lmax,length.out=50)
+        lambda <- seq(from=lmin,to=lmax,length.out=25)
       }
       for(a in alpha){
         for(l in lambda){
