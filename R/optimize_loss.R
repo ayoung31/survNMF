@@ -32,5 +32,5 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.01,maxit=5000,
     print(sprintf("iter: %d eps: %.3f",it,eps))
   }
   
-  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survloss=l$survperc))
+  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survperc=l$survperc))
 }
