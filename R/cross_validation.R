@@ -40,7 +40,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
       #calculate loss for Xtest
       testloss <- calc_loss(Xtest,fit$W,Htest,fit$beta,a,ytest,dtest,theta,l)
       
-      loss[r,] <- c(f,k,a,l,testloss,sum(fit$beta > 0),)
+      loss[r,] <- c(f,k,a,l,testloss$loss,sum(fit$beta > 0),testloss$survperc)
       r <- r+1
       print(sprintf('k: %d lambda %.2f',k,l))
     }
