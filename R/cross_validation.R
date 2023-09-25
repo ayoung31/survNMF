@@ -8,8 +8,8 @@ library(NMF)
 #' @export
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
   M <- length(X)
-  loss <- data.frame(matrix(ncol=5,nrow=0))
-  colnames(loss) <- c('fold','k','alpha','lambda','loss')
+  loss <- data.frame(matrix(ncol=7,nrow=0))
+  colnames(loss) <- c('fold','k','alpha','lambda','loss','nbeta','cindex')
   r <- 1
   Xtrain <- list()
   Xtest <- list()
@@ -40,7 +40,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
       #calculate loss for Xtest
       testloss <- calc_loss(Xtest,fit$W,Htest,fit$beta,a,ytest,dtest,theta,l)
       
-      loss[r,] <- c(f,k,a,l,testloss)
+      loss[r,] <- c(f,k,a,l,testloss,sum(fit$beta > 0),)
       r <- r+1
       print(sprintf('k: %d lambda %.2f',k,l))
     }

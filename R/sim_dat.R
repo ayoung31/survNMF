@@ -3,12 +3,12 @@ library(simsurv)
 
 sim_dat <- function(M,p,ni,k,lb,lf,ksurv,beta){
   
-  W <- matrix(rexp(p*k,lb),nrow=p,ncol=k)
+  W <- matrix(rexp(p*k,1/lb),nrow=p,ncol=k)
   
   genes <- list()
   for(i in 1:k){
     genes[[i]] <- sample(1:nrow(W),25,replace=FALSE)
-    W[genes[[i]],i] <- rexp(25,lf)
+    W[genes[[i]],i] <- rexp(25,1/lf)
     
   }
   
