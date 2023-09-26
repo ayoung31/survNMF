@@ -20,8 +20,8 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.01,maxit=5000,
     H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step,mu)
     
     # Calculate loss
-    l <- calc_loss(X,W,H,beta,alpha,y,delta,theta,lambda)
-    loss <- l$loss
+    loss <- calc_loss(X,W,H,beta,alpha,y,delta,theta,lambda)
+    #loss <- l$loss
     
     eps <- abs(loss - loss_prev)
     
@@ -32,5 +32,5 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.01,maxit=5000,
     print(sprintf("iter: %d eps: %.3f",it,eps))
   }
   
-  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survperc=l$survperc))
+  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps))
 }
