@@ -8,7 +8,7 @@ library(NMF)
 #' @export
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
   M <- length(X)
-  loss <- data.frame(matrix(ncol=7,nrow=0))
+  loss <- data.frame(matrix(ncol=6,nrow=0))
   colnames(loss) <- c('fold','k','alpha','lambda','loss','nbeta')
   r <- 1
   Xtrain <- list()
