@@ -1,8 +1,10 @@
 library(gtools)
 library(simsurv)
 
+#' @export
 sim_dat <- function(M,p,ni,k,lb,lf,ksurv,beta){
-  
+  library(gtools)
+  library(simsurv)
   W <- matrix(rexp(p*k,1/lb),nrow=p,ncol=k)
   
   genes <- list()
