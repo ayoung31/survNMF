@@ -7,6 +7,7 @@ library(NMF)
 
 #' @export
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
+  library(cvwrapr)
   M <- length(X)
   loss <- data.frame(matrix(ncol=7,nrow=0))
   colnames(loss) <- c('fold','k','alpha','lambda','loss','nbeta','survperc')
@@ -39,6 +40,11 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
       
       #calculate loss for Xtest
       testloss <- calc_loss(Xtest,fit$W,Htest,fit$beta,a,ytest,dtest,theta,l)
+      
+      #calculate c-index
+      Htest_mat <- t(do.call('cbind',Htest))
+      cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest,dtest)))
+      
       
       loss[r,] <- c(f,k,a,l,testloss$loss,sum(fit$beta > 0),testloss$survperc)
       r <- r+1

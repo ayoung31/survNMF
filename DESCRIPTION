@@ -13,7 +13,7 @@ RoxygenNote: 7.2.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Depends: Rcpp (>= 0.11.0), RcppArmadillo, NMF, survival, glmnet
-LinkingTo: Rcpp, RcppArmadillo, NMF, survival, glmnet
+Depends: Rcpp (>= 0.11.0), RcppArmadillo, NMF, survival, glmnet, cvwrapr
+LinkingTo: Rcpp, RcppArmadillo, NMF, survival, glmnet, cvwrapr
 Imports: 
     Rcpp
