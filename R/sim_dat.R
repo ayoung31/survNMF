@@ -26,10 +26,10 @@ sim_dat <- function(M,p,ni,k,lb,lf,ksurv,beta){
     H[[i]][(ksurv+1):k,] <- matrix(rexp(ni*(k-ksurv),1/.25),nrow=(k-ksurv),ncol=ni)
   }
   Hbind <- do.call('cbind',H)
-  
+  Hnorm <- apply(t(Hbind),2,scale)
   # si <- sim.survdata(N=ni, T=80, num.data.frames = 1, fixed.hazard = TRUE,
   #              X=t(Hbind[1:ksurv,]),beta=beta)
-  xsurv <- data.frame(t(Hbind)[,1:ksurv])
+  xsurv <- data.frame(Hnorm[,1:ksurv])
   names(beta) <- colnames(xsurv)
   si <- simsurv(dist = 'weibull',lambdas = .0001, gammas = 2.1, x = xsurv, betas = beta, maxt=60)
   
