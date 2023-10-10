@@ -6,8 +6,9 @@ library(NMF)
 # let alpha, lambda, k be a grid of possible values
 
 #' @export
-cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
+cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,seed,folds,f,k){
   library(cvwrapr)
+  set.seed(seed)
   M <- length(X)
   loss <- data.frame(matrix(ncol=10,nrow=0))
   colnames(loss) <- c('fold','k','alpha','lambda','loss','nmf_loss','surv_loss','pen_loss','nbeta','cindex')
