@@ -21,5 +21,5 @@ calc_loss <- function(X,W,H,beta,alpha,y,delta,theta,lambda){
   loss <- p1 + p2 + p3
   survloss <- p2 + p3
   
-  return(list(loss=loss,survperc=100*survloss/loss))
+  return(list(loss=loss,nmf_loss=p1,surv_loss=p2,pen_loss=p3))
 }

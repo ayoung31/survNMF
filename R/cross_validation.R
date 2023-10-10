@@ -9,8 +9,8 @@ library(NMF)
 cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
   library(cvwrapr)
   M <- length(X)
-  loss <- data.frame(matrix(ncol=8,nrow=0))
-  colnames(loss) <- c('fold','k','alpha','lambda','loss','nbeta','survperc','cindex')
+  loss <- data.frame(matrix(ncol=10,nrow=0))
+  colnames(loss) <- c('fold','k','alpha','lambda','loss','nmf_loss','surv_loss','pen_loss','nbeta','cindex')
   r <- 1
   Xtrain <- list()
   Xtest <- list()
@@ -46,7 +46,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,K,seed,folds,f,k){
       ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest,dtest)))
       
       
-      loss[r,] <- c(f,k,a,l,testloss$loss,sum(fit$beta > 0),testloss$survperc,ci)
+      loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
       r <- r+1
       print(sprintf('k: %d lambda %.2f',k,l))
     }
