@@ -23,8 +23,8 @@ grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
   eps <- 1
   b <- 0
   while(eps > tol & it < maxit){
-    grad <- f.grad.rcpp(X,W,H,as.matrix(beta),alpha,as.matrix(y),as.matrix(delta),theta,j)
-    #grad <- f_grad(X,W,H,beta,alpha,y,delta,theta,j)
+    #grad <- f.grad.rcpp(X,W,H,as.matrix(beta),alpha,as.matrix(y),as.matrix(delta),theta,j)
+    grad <- f_grad(X,W,H,beta,alpha,y,delta,theta,j)
     Hj_prior <- H[,j]
     b_prior <- b
     b <- mu*b_prior + grad
