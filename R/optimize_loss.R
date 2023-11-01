@@ -31,11 +31,12 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.01,maxit=5000,
       warning("Iteration limit reached without convergence")
     }
     
-    if(abs(eps_prev-eps)<.01){
-      break
-    }
     
     print(sprintf("iter: %d eps: %.4f eps_prev: %.4f",it,eps,eps_prev))
+    
+    if(abs(eps_prev-eps)<.001){
+      break
+    }
   }
   
   return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survperc=l$survperc))
