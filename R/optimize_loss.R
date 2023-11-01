@@ -31,7 +31,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,tol=0.01,maxit=5000,
       warning("Iteration limit reached without convergence")
     }
     
-    if(eps_prev-eps<.01){
+    if(abs(eps_prev-eps)<.01){
       break
     }
     
