@@ -31,7 +31,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,f,k){
   for(a in alpha){
     for(l in lambda){
       for(e in eta){
-        H0 <- init_H(Xtrain,k,y,delta,theta,alpha=a,lambda=l,eta=e)
+        H0 <- init_H(Xtrain,k,ytrain,dtrain,theta,alpha=a,lambda=l,eta=e)
         #fit loss function to training data 
         fit <- optimize_loss(X=Xtrain,H0=H0,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99)
         
