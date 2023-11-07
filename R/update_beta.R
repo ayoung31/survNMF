@@ -1,5 +1,5 @@
 #' @export
-update_beta <- function(H,y,delta,theta,lambda){
+update_beta <- function(H,y,delta,theta,lambda,alpha){
   ns <- numeric()
   M <- length(H)
   weights <- numeric()
@@ -12,7 +12,7 @@ update_beta <- function(H,y,delta,theta,lambda){
   delta <- unlist(delta)
   
   y_surv <- Surv(y,delta)
-  fit <- glmnet::glmnet(H,y_surv,family='cox',weights=weights,lambda=lambda)
+  fit <- glmnet::glmnet(H,y_surv,family='cox',weights=weights,lambda=lambda,alpha=alpha)
   
   return(as.numeric(coef(fit)))
 }
