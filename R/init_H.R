@@ -1,6 +1,6 @@
 
 #' @export
-init_H <- function(X,k,y,delta,method='random',ninit=10){
+init_H <- function(X,k,y,delta,theta,alpha,lambda,eta,method='random',ninit=10){
   M <- length(X)
   if(method=='IndNMF'){
     
@@ -39,7 +39,7 @@ init_H <- function(X,k,y,delta,method='random',ninit=10){
         H0[[i]] <- matrix(runif(k*n),nrow=k,ncol=n)
       }
       #call optimize loss
-      fit <- optimize_loss(X,H0,k,y,delta,theta,alpha,lambda,maxit=20)
+      fit <- optimize_loss(X,H0,k,y,delta,theta,alpha,lambda,eta,maxit=20)
       Hcurr <- t(do.call('cbind',fit$H))
       cind[j] <- cvwrapr::getCindex(Hcurr %*% fit$beta,Surv(unlist(y),unlist(delta)))
     }
