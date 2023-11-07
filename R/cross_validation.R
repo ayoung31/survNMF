@@ -6,7 +6,7 @@ library(NMF)
 # let alpha, lambda, k be a grid of possible values
 
 #' @export
-cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,seed,folds,f,k){
+cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,f,k){
   library(cvwrapr)
   set.seed(seed)
   M <- length(X)
@@ -27,29 +27,33 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,seed,folds,f,k){
     dtrain[[m]] <- delta[[m]][folds[[m]] != f]
     dtest[[m]] <- delta[[m]][folds[[m]] == f]
   }
-  H0 <- init_H(Xtrain,k)
+  
   for(a in alpha){
     for(l in lambda){
-      #fit loss function to training data 
-      fit <- optimize_loss(X=Xtrain,H0=H0,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99)
-      
-      #get Htest
-      Htest <- list()
-      for(m in 1:M){
-        Htest[[m]] <- .fcnnls(fit$W,Xtest[[m]])$coef
+      for(e in eta){
+        H0 <- init_H(Xtrain,k,y,delta,theta,a,lambda=l,eta=e)
+        #fit loss function to training data 
+        fit <- optimize_loss(X=Xtrain,H0=H0,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99)
+        
+        #get Htest
+        Htest <- list()
+        for(m in 1:M){
+          Htest[[m]] <- .fcnnls(fit$W,Xtest[[m]])$coef
+        }
+        
+        #calculate loss for Xtest
+        testloss <- calc_loss(Xtest,fit$W,Htest,fit$beta,a,ytest,dtest,theta,l)
+        
+        #calculate c-index
+        Htest_mat <- t(do.call('cbind',Htest))
+        ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest,dtest)))
+        
+        
+        loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
+        r <- r+1
+        print(sprintf('k: %d lambda %.2f',k,l))
       }
       
-      #calculate loss for Xtest
-      testloss <- calc_loss(Xtest,fit$W,Htest,fit$beta,a,ytest,dtest,theta,l)
-      
-      #calculate c-index
-      Htest_mat <- t(do.call('cbind',Htest))
-      ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest,dtest)))
-      
-      
-      loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
-      r <- r+1
-      print(sprintf('k: %d lambda %.2f',k,l))
     }
   }
   #aloss <- loss %>% group_by(k,alpha,lambda) %>% summarise(avgloss=mean(loss))
