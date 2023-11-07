@@ -30,7 +30,7 @@ init_H <- function(X,k,y,delta,theta,alpha,lambda,eta,method='random',ninit=10){
       }
     }
   }else if(method=='random'){
-    cind <- numeric()
+    cprev <- 0
     for(j in 1:ninit){
       set.seed(j)
       H0 <- list()
@@ -39,17 +39,15 @@ init_H <- function(X,k,y,delta,theta,alpha,lambda,eta,method='random',ninit=10){
         H0[[i]] <- matrix(runif(k*n),nrow=k,ncol=n)
       }
       #call optimize loss
-      fit <- optimize_loss(X,H0,k,y,delta,theta,alpha,lambda,eta,maxit=20)
+      fit <- optimize_loss(X,H0,k,y,delta,theta,alpha,lambda,eta,maxit=15)
       Hcurr <- t(do.call('cbind',fit$H))
-      cind[j] <- cvwrapr::getCindex(Hcurr %*% fit$beta,Surv(unlist(y),unlist(delta)))
+      cind <- cvwrapr::getCindex(Hcurr %*% fit$beta,Surv(unlist(y),unlist(delta)))
+      if(cind > cprev){
+        cprev <- cind
+        best_fit <- fit
+      }
     }
-    bestj <- which.max(cind)
-    set.seed(bestj)
-    H0 <- list()
-    for(i in 1:M){
-      n <- ncol(X[[i]])
-      H0[[i]] <- matrix(runif(k*n),nrow=k,ncol=n)
-    }
+    H0 <- best_fit$H
   }
   
   
