@@ -7,9 +7,16 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
   eps <- 1
   it <- 0
   
+  #scale H
+  for(i in 1:length(H)){
+    H[[i]] <- apply(H[[i]],2,scale)
+  }
+  
   while(eps > tol & it < maxit){
     loss_prev <- loss
     eps_prev <- eps
+    
+    
     
     # Update beta
     beta <- update_beta(H,y,delta,theta,lambda,eta)
@@ -19,6 +26,11 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     
     # Update H
     H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step,mu)
+    
+    #scale H
+    for(i in 1:length(H)){
+      H[[i]] <- apply(H[[i]],2,scale)
+    }
     
     # Calculate loss
     l <- calc_loss(X,W,H,beta,alpha,y,delta,theta,lambda)
