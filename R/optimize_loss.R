@@ -34,9 +34,9 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     
     print(sprintf("iter: %d eps: %.4f eps_prev: %.4f",it,eps,eps_prev))
     
-    if(abs(eps_prev-eps)<.0001){
-      break
-    }
+    # if(abs(eps_prev-eps)<.0001){
+    #   break
+    # }
   }
   
   return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survperc=l$survperc))
