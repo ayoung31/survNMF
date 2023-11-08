@@ -9,7 +9,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
   
   #scale H
   for(i in 1:length(H)){
-    H[[i]] <- apply(H[[i]],1,scale)
+    H[[i]] <- t(apply(H[[i]],1,scale))
   }
   
   while(eps > tol & it < maxit){
@@ -29,7 +29,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     
     #scale H
     for(i in 1:length(H)){
-      H[[i]] <- apply(H[[i]],1,scale)
+      H[[i]] <- t(apply(H[[i]],1,scale))
     }
     
     # Calculate loss
