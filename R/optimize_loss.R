@@ -15,7 +15,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     beta <- update_beta(H,y,delta,theta,lambda,eta)
     
     # Update W
-    W <- tryCatch(t(update_W(X,H,theta),warning=W)
+    W <- tryCatch(t(update_W(X,H,theta)),warning=W)
     
     # Update H
     H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step,mu)
