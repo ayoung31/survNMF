@@ -13,9 +13,10 @@ calc_loss <- function(X,W,H,beta,alpha,y,delta,theta,lambda){
     for(j in 1:ni){
       p2a <- p2a + deltai[j]*(t(beta)%*%Hi[,j]-log(sum((yi>=yi[j])*t(exp(t(beta)%*%Hi)))))
     }
-    p1 <- p1 + theta[i]*p1a
-    p2 <- p2 - theta[i]*alpha*p2a*2/ni
+    p1 <- p1 + theta[i]*(1-alpha)*p1a
+    p2 <- p2 - theta[i]*alpha*p2a
   }
+  
   p3 <- alpha*lambda*sum(abs(beta))
   
   loss <- p1 + p2 + p3

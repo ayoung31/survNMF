@@ -15,7 +15,12 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     beta <- update_beta(H,y,delta,theta,lambda,eta)
     
     # Update W
-    W <- tryCatch(t(update_W(X,H,theta)),warning=W)
+    pr <- tryCatch({
+      W <- t(update_W(X,H,theta))},
+      error=function(e) e)
+    if(inherits(pr,"error")){
+      break
+    }
     
     # Update H
     H <- grad_desc_H(X,W,H,beta,alpha,y,delta,theta,tol_H,maxit_H,step,mu)
@@ -34,10 +39,7 @@ optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit
     
     print(sprintf("iter: %d eps: %.4f eps_prev: %.4f",it,eps,eps_prev))
     
-    # if(abs(eps_prev-eps)<.0001){
-    #   break
-    # }
   }
   
-  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survperc=l$survperc))
+  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
 }

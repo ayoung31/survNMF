@@ -14,7 +14,7 @@ f_grad <- function(X,W,H,beta,alpha,y,delta,theta,j){
   p1 <- t(W)%*%W%*%H[,j] - t(W)%*%X[,j]
   p2 <- as.numeric(1 - (exp(t(beta)%*%H[,j]))/(sum((y>=y[j])*t(exp(t(beta)%*%H)))))
   
-  return(theta*(p1-alpha*delta[j]*p2*beta))
+  return(theta*((1-alpha)*p1-alpha*delta[j]*p2*beta))
 }
 #' @export
 grad_desc_hji <- function(X,W,H,beta,alpha,y,delta,theta,j,tol,maxit,step,mu){
