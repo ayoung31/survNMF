@@ -1,7 +1,10 @@
 
 #' @export
-optimize_loss <- function(X,H0,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99){
+optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99){
   #initialize
+  if(is.null(H0)){
+    H0 <- init_H(X,k,y,delta,theta,alpha,lambda,eta,method='random',ninit=5)
+  }
   H <- H0
   loss <- 0
   eps <- 1
