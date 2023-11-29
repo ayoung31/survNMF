@@ -22,6 +22,7 @@ optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,
       W <- t(update_W(X,H,theta))},
       error=function(e) e)
     if(inherits(pr,"error")){
+      print('error in solving W')
       break
     }
     
@@ -34,15 +35,19 @@ optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,
     
     eps <- abs(loss - loss_prev)
     
+    if(it==1){
+      W0 <- W
+      beta0 <- beta
+    }
+    
     it <- it + 1
     if(it==maxit){
       warning("Iteration limit reached without convergence")
     }
     
-    
     print(sprintf("iter: %d eps: %.4f eps_prev: %.4f",it,eps,eps_prev))
     
   }
   
-  return(list(beta=beta,H=H,H0=H0,W=W,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
+  return(list(beta=beta,H=H,H0=H0,W=W,W0=W0,beta0=beta0,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
 }
