@@ -44,5 +44,5 @@ optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,
     
   }
   
-  return(list(beta=beta,H=H,W=W,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
+  return(list(beta=beta,H=H,H0=H0,W=W,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
 }
