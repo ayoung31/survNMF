@@ -35,7 +35,7 @@ optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,
     
     eps <- abs(loss - loss_prev)
     
-    if(it==1){
+    if(it==0){
       W0 <- W
       beta0 <- beta
     }
