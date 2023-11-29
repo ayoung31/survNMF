@@ -12,7 +12,7 @@ arma::mat f_grad_rcpp(arma::mat& X, arma::mat& W, arma::mat& H, arma::mat& beta,
   p1 = W.t()*W*H.col(j-1) - W.t()*X.col(j-1);
   p2 = as_scalar(1 - (exp(beta.t()*H.col(j-1))/sum((y>=y[j-1]) % exp(beta.t()*H).t()))) * beta;
   
-  grad = theta*(p1-alpha*delta[j-1]*p2);
+  grad = theta*((1-alpha)*p1-alpha*delta[j-1]*p2);
   
   return grad;
 }
