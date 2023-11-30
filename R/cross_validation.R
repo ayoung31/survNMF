@@ -51,7 +51,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
           
           loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
           r <- r+1
-          print(sprintf('k: %d lambda %.2f',k,l))
+          print(sprintf('k: %d fold: %d alpha: %.2f lambda: %.2f eta: %.2f',k,f,a,l,e))
         }
         
       }
