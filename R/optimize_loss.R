@@ -1,6 +1,6 @@
 
 #' @export
-optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.01,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99,method='random'){
+optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.001,maxit=5000,tol_H=1e-4,maxit_H=10000,step=1e-5,mu=.99,method='random'){
   #initialize
   if(is.null(H0)){
     H0 <- init_H(X,k,y,delta,theta,alpha,lambda,eta,method=method,ninit=5)
