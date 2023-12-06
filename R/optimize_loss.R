@@ -49,5 +49,8 @@ optimize_loss <- function(X,H0=NULL,k,y,delta,theta,alpha,lambda,eta=1,tol=0.001
     
   }
   
-  return(list(beta=beta,H=H,H0=H0,W=W,W0=W0,beta0=beta0,loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
+  # refit beta with standardized H
+  nb <- update_beta(H,y,delta,theta,lambda,eta,stdize=FALSE)
+  
+  return(list(beta=beta,H=H,H0=H0,W=W,W0=W0,beta0=beta0,sbeta=nb$beta,Hstd=t(nb$H),loss=loss,eps=eps,survloss=l$surv_loss,recon_err=l$nmf_loss,pen=l$pen_loss))
 }
