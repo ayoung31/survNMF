@@ -19,7 +19,7 @@ update_beta <- function(H,y,delta,theta,lambda,eta,stdize=TRUE){
                         lambda=lambda,alpha=eta,standardize = stdize)
   
   if(!stdize){
-    return(beta=as.numeric(coef(fit)),H=H)
+    return(list(beta=as.numeric(coef(fit)),H=H))
   }else{
     return(as.numeric(coef(fit)))
   }
