@@ -46,7 +46,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
           
           #calculate c-index
           Htest_mat <- t(do.call('cbind',Htest))
-          ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest,dtest)))
+          ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest),unlist(dtest)))
           
           
           loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
