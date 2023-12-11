@@ -10,8 +10,8 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
   library(cvwrapr)
   set.seed(seed)
   M <- length(X)
-  loss <- data.frame(matrix(ncol=10,nrow=0))
-  colnames(loss) <- c('fold','k','alpha','lambda','loss','nmf_loss','surv_loss','pen_loss','nbeta','cindex')
+  loss <- data.frame(matrix(ncol=11,nrow=0))
+  colnames(loss) <- c('fold','k','alpha','lambda','eta','loss','nmf_loss','surv_loss','pen_loss','nbeta','cindex')
   r <- 1
   for(f in 1:nfold){
     Xtrain <- list()
@@ -49,7 +49,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
           ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest),unlist(dtest)))
           
           
-          loss[r,] <- c(f,k,a,l,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
+          loss[r,] <- c(f,k,a,l,e,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
           r <- r+1
           print(sprintf('k: %d fold: %d alpha: %.2f lambda: %.2f eta: %.2f',k,f,a,l,e))
         }
