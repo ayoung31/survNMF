@@ -33,7 +33,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
       for(l in lambda){
         for(e in eta){
           #fit loss function to training data 
-          fit <- optimize_loss(X=Xtrain,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,maxit=1000)
+          fit <- optimize_loss(X=Xtrain,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,maxit=500)
           
           #get Htest
           Htest <- list()
@@ -48,6 +48,9 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
           Htest_mat <- t(do.call('cbind',Htest))
           ci <- cvwrapr::getCindex(Htest_mat %*% fit$beta, Surv(unlist(ytest),unlist(dtest)))
           
+          #training c-index
+          Htrain_mat <- t(do.call('cbind',fit$H))
+          ci_train <- cvwrapr::getCindex(Htrain_mat %*% fit$beta, Surv(unlist(ytrain),unlist(ytest)))
           
           loss[r,] <- c(f,k,a,l,e,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
           r <- r+1
@@ -60,5 +63,5 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
   #aloss <- loss %>% group_by(k,alpha,lambda) %>% summarise(avgloss=mean(loss))
   # params <- aloss[which.min(aloss$avgloss),]
   
-  return(loss)
+  return(list(loss=loss,ci_train=ci_train,fit=fit))
 }
