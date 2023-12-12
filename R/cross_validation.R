@@ -33,7 +33,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
       for(l in lambda){
         for(e in eta){
           #fit loss function to training data 
-          fit <- optimize_loss(X=Xtrain,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,maxit=1500)
+          fit <- optimize_loss(X=Xtrain,k=k,y=ytrain,delta=dtrain,theta=theta,alpha=a,lambda=l,eta=e,maxit=1000)
           
           #get Htest
           Htest <- list()
