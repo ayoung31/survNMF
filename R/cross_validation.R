@@ -50,7 +50,7 @@ cv <- function(X,y,delta,theta,nfold,alpha,lambda=NULL,eta,seed,folds,k){
           
           #training c-index
           Htrain_mat <- t(do.call('cbind',fit$H))
-          ci_train <- cvwrapr::getCindex(Htrain_mat %*% fit$beta, Surv(unlist(ytrain),unlist(ytest)))
+          ci_train <- cvwrapr::getCindex(Htrain_mat %*% fit$beta, Surv(unlist(ytrain),unlist(dtrain)))
           
           loss[r,] <- c(f,k,a,l,e,testloss$loss,testloss$nmf_loss,testloss$surv_loss,testloss$pen_loss,sum(fit$beta > 0),ci)
           r <- r+1
